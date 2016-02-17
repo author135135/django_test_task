@@ -2,6 +2,11 @@ from django.db import models
 
 
 # Create your models here.
+class GroupManager(models.Manager):
+    def get_queryset(self):
+        return super(GroupManager, self).get_queryset().select_related('group_monitor').prefetch_related('student_set')
+
+
 class Student(models.Model):
     full_name = models.CharField(max_length=75)
     birthdate = models.DateField()
@@ -26,6 +31,8 @@ class Student(models.Model):
 class Group(models.Model):
     group_name = models.CharField(max_length=25)
     group_monitor = models.ForeignKey(to=Student, related_name='+', blank=True, null=True, default=None)
+
+    object = GroupManager()
 
     def __unicode__(self):
         return self.group_name

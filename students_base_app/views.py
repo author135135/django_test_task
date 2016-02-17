@@ -122,6 +122,7 @@ account_login = AccountLogin.as_view()
 
 class AccountLogout(RedirectView):
     url = reverse_lazy('students_app:home')
+    permanent = False
 
     def get(self, request, *args, **kwargs):
         logout(request)

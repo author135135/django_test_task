@@ -1,4 +1,5 @@
 {% load static %}
+{% load students_base_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,33 +8,34 @@
     <link rel="stylesheet" href="{% static 'students_base_app/css/bootstrap.min.css' %}">
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-10">
-                <div class="page-header clearfix">
-                    <h1 class="pull-left">{% block page_title %}{% endblock %}</h1>
-                    {% if request.user.is_authenticated %}
-                        <div class="btn-group pull-right">
-                          <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"
-                                  aria-haspopup="true" aria-expanded="false">
-                              You are {{ request.user.username }} <span class="caret"></span>
-                          </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="{% url 'students_app:account_logout' %}">Logout</a></li>
-                            </ul>
-                        </div>
-                    {% endif %}
-                </div>
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-success" role="alert">{{ message }}</div>
-                    {% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="page-header clearfix">
+                <h1 class="pull-left">{% block page_title %}{% endblock %}</h1>
+                {% if request.user.is_authenticated %}
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            You are {{ request.user.username }} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'students_app:account_logout' %}">Logout</a></li>
+                        </ul>
+                    </div>
                 {% endif %}
-                {% block content %}{% endblock %}
             </div>
+            {% breadcrumbs %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
         </div>
     </div>
-    <script type="text/javascript" src="{% static 'students_base_app/js/jquery-2.2.0.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'students_base_app/js/bootstrap.min.js' %}"></script>
+</div>
+<script type="text/javascript" src="{% static 'students_base_app/js/jquery-2.2.0.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'students_base_app/js/bootstrap.min.js' %}"></script>
 </body>
 </html>

@@ -28,10 +28,7 @@
         {% endfor %}
         <tr>
             <td colspan="{% if request.user.is_staff %}4{% else %}3{% endif %}">
-                <a class="btn btn-success" href="{% url 'students_app:student_add' %}">Add Student</a>
-                <a class="btn btn-info pull-right" href="{% url 'students_app:group_edit' group_id=group.id %}">
-                    Edit group
-                </a>
+                <a class="btn btn-info" href="{% url 'students_app:group_edit' group_id=group.id %}">Edit group</a>
             </td>
         </tr>
     </table>

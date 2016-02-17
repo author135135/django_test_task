@@ -1,0 +1,9 @@
+<ol class="breadcrumb">
+    {% for link in links %}
+        {% if forloop.last %}
+            <li>{{ link.title }}</li>
+        {% else %}
+            <li><a href="{{ link.href }}">{{ link.title }}</a></li>
+        {% endif %}
+    {% endfor %}
+</ol>
