@@ -1,0 +1,35 @@
+{% extends 'students_base_app/base.html' %}
+
+{% load students_base_tags %}
+
+{% block title %}Main page{% endblock %}
+
+{% block page_title %}Welcome to groups manager!{% endblock %}
+
+{% block content %}
+    <table class="table table-responsive table-bordered">
+        <tr>
+            <th>Group</th>
+            <th>Students count</th>
+            <th>Group monitor</th>
+            {% if request.user.is_staff %}
+                <th>Admin edit link</th>
+            {% endif %}
+        </tr>
+        {% for group in groups %}
+            <tr>
+                <td><a href="{% url 'students_app:group_view' group_id=group.id %}">{{ group }}</a></td>
+                <td>{{ group.student_set.count }}</td>
+                <td>{{ group.group_monitor.full_name }}</td>
+                {% if request.user.is_staff %}
+                    <td><a class="label label-default" href="{% edit group %}">edit</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="{% if request.user.is_staff %}4{% else %}3{% endif %}">
+                <a class="btn btn-success" href="{% url 'students_app:group_add' %}">Add group</a>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

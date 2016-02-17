@@ -1,0 +1,38 @@
+{% extends 'students_base_app/base.html' %}
+
+{% load students_base_tags %}
+
+{% block title %}Group view{% endblock %}
+
+{% block page_title %}View group - {{ group.group_name|upper }}{% endblock %}
+
+{% block content %}
+    <table class="table table-responsive table-bordered">
+        <tr>
+            <th>Student</th>
+            <th>Birthdate</th>
+            <th>Student id</th>
+            {% if request.user.is_staff %}
+                <th>Admin edit link</th>
+            {% endif %}
+        </tr>
+        {% for student in group.student_set.all %}
+            <tr>
+                <td><a href="{% url 'students_app:student_edit' student_id=student.id %}">{{ student }}</a></td>
+                <td>{{ student.birthdate }}</td>
+                <td>{{ student.studentid_cart }}</td>
+                {% if request.user.is_staff %}
+                    <td><a class="label label-default" href="{% edit student %}">edit</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="{% if request.user.is_staff %}4{% else %}3{% endif %}">
+                <a class="btn btn-success" href="{% url 'students_app:student_add' %}">Add Student</a>
+                <a class="btn btn-info pull-right" href="{% url 'students_app:group_edit' group_id=group.id %}">
+                    Edit group
+                </a>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

@@ -1,0 +1,10 @@
+from django.apps import AppConfig
+
+
+class StudentsBaseAppConfig(AppConfig):
+    name = 'students_base_app'
+    verbose_name = 'Students Base'
+
+    def ready(self):
+        pass
+        # import students_base_app.signals.handlers
