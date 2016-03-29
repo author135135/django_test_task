@@ -1,5 +1,5 @@
 from django.contrib import admin
-from students_base_app.models import Student, Group, ModelsLogger
+from students_base_app.models import Student, Group
 
 
 # Register your models here.
@@ -27,14 +27,5 @@ class GroupAdmin(admin.ModelAdmin):
     class Meta:
         model = Group
 
-
-class ModelsLoggerAdmin(admin.ModelAdmin):
-    list_display = ['application', 'model', 'operation_type', 'timestamp']
-
-    class Meta:
-        model = ModelsLogger
-
-
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Group, GroupAdmin)
-admin.site.register(ModelsLogger, ModelsLoggerAdmin)

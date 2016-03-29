@@ -3,6 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.core.paginator import Paginator
 from students_base_app.models import Student, Group
 from students_base_app.forms import StudentForm, GroupForm, LoginForm
 
@@ -21,6 +22,18 @@ class GroupView(DetailView):
     model = Group
     context_object_name = 'group'
     pk_url_kwarg = 'group_id'
+    paginate_by = 2
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupView, self).get_context_data(**kwargs)
+
+        paginator = Paginator(self.object.student_set.all(), self.paginate_by)
+        page_obj = paginator.page(self.request.GET.get('page', 1))
+
+        context['students'] = page_obj.object_list
+        context['page_obj'] = page_obj
+
+        return context
 
 group_view = login_required(GroupView.as_view())
 

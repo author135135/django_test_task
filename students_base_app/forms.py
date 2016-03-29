@@ -5,7 +5,7 @@ from students_base_app.models import Student, Group
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['full_name', 'birthdate', 'studentid_cart', 'group']
+        fields = ['full_name', 'photo', 'birthdate', 'studentid_cart', 'group']
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
             'birthdate': forms.TextInput(attrs={'class': 'form-control'}),

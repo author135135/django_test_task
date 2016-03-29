@@ -22,8 +22,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('full_name', models.CharField(max_length=75)),
+                ('photo', models.ImageField(upload_to=b'students')),
                 ('birthdate', models.DateField()),
-                ('studentid_cart', models.CharField(max_length=25)),
+                ('studentid_cart', models.CharField(max_length=25, blank=True)),
                 ('group', models.ForeignKey(to='students_base_app.Group')),
             ],
         ),

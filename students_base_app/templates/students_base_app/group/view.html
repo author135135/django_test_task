@@ -1,6 +1,7 @@
 {% extends 'students_base_app/base.html' %}
 
 {% load students_base_tags %}
+{% load thumbnail %}
 
 {% block title %}Group view{% endblock %}
 
@@ -9,6 +10,7 @@
 {% block content %}
     <table class="table table-responsive table-bordered">
         <tr>
+            <th>Photo</th>
             <th>Student</th>
             <th>Birthdate</th>
             <th>Student id</th>
@@ -16,8 +18,13 @@
                 <th>Admin edit link</th>
             {% endif %}
         </tr>
-        {% for student in group.student_set.all %}
+        {% for student in students %}
             <tr>
+                <td>
+                    {% thumbnail student.photo "100x100" crop="top" as img %}
+                        <img src="{{ img.url }}" alt="{{ celebrity }}">
+                    {% endthumbnail %}
+                </td>
                 <td><a href="{% url 'students_app:student_edit' student_id=student.id %}">{{ student }}</a></td>
                 <td>{{ student.birthdate }}</td>
                 <td>{{ student.studentid_cart }}</td>
@@ -27,9 +34,19 @@
             </tr>
         {% endfor %}
         <tr>
-            <td colspan="{% if request.user.is_staff %}4{% else %}3{% endif %}">
+            <td colspan="{% if request.user.is_staff %}5{% else %}4{% endif %}">
                 <a class="btn btn-info" href="{% url 'students_app:group_edit' group_id=group.id %}">Edit group</a>
             </td>
         </tr>
     </table>
+    {% if page_obj.has_previous or page_obj.has_next %}
+        <ul class="pager">
+            {% if page_obj.has_previous %}
+                <li><a href="{{ home_url }}?page={{ page_obj.previous_page_number }}">&larr; Prev</a></li>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <li><a href="{{ home_url }}?page={{ page_obj.next_page_number }}">Next &rarr;</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
 {% endblock %}

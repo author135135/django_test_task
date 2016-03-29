@@ -9,6 +9,7 @@ class GroupManager(models.Manager):
 
 class Student(models.Model):
     full_name = models.CharField(max_length=75)
+    photo = models.ImageField(upload_to='students')
     birthdate = models.DateField()
     studentid_cart = models.CharField(max_length=25, blank=True)
     group = models.ForeignKey(to='Group')
@@ -32,7 +33,7 @@ class Group(models.Model):
     group_name = models.CharField(max_length=25)
     group_monitor = models.ForeignKey(to=Student, related_name='+', blank=True, null=True, default=None)
 
-    object = GroupManager()
+    objects = GroupManager()
 
     def __unicode__(self):
         return self.group_name
@@ -46,24 +47,3 @@ class Group(models.Model):
         return self.student_set.count()
 
     students_count = property(_students_count)
-
-
-class ModelsLogger(models.Model):
-    OPERATION_TYPES = (
-        ('create', 'Create'),
-        ('update', 'Update'),
-        ('delete', 'Delete')
-    )
-
-    application = models.CharField(max_length=50)
-    model = models.CharField(max_length=50)
-    operation_type = models.CharField(max_length=15, choices=OPERATION_TYPES)
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __unicode__(self):
-        return 'Model <{}:{}> Operation type: {}'.format(self.application, self.model, self.operation_type)
-
-    @staticmethod
-    def log(application, model_name, operation_type):
-        instance = ModelsLogger(application=application, model=model_name, operation_type=operation_type)
-        instance.save()
