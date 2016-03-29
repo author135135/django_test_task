@@ -16,7 +16,3 @@ and number of SQL queries (before `</body>` closing tag).
 5. Templates/Context. Create template-context-processor which adds `django.settings` in template context.
 6. Templates/Tags. Create template tag which takes any object and return reference to it
 editing in the admin area (for example `{% edit request.user %}`).
-7. Signals. Write a signal handler which for any models change create record on its
-database about creating/updating/deleting.
-8. Commands. Write Django command which prints in to console list of the groups and students in these groups.
-9. Django Test. Write Django TestCase(unittest) which logs in to the site and create new group and student in this group. 
